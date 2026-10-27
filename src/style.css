@@ -1,0 +1,109 @@
+
+:root {
+    --darker    : #2E2530;
+    --darker-o  : #2E253066;
+    --dark      : #5A4A5C;
+    --medium    : #8C7B8E;
+    --light     : #C2B8C4;
+    --lighter   : #EFECEF;
+    /* https://colorffy.com/palettes/rz5X3JR2RsCvEBj5yW7y */
+
+    --font-size     : calc(1rem + (1.2vw / 5));
+}
+
+body {
+    margin: 0;
+    background-color: var(--light);
+    font-size: var(--font-size);
+}
+
+footer {
+    text-align: center;
+}
+
+/* Header */
+header {
+    z-index: 1;
+    background-color: var(--darker);
+    color: var(--lighter);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    & h1 {
+        margin: 0;
+        font-size: 1em;
+    }
+
+    & a {
+        color: var(--lighter);
+        text-decoration: none;
+    }
+
+    & .middle {
+        display: flex;
+        grid-gap: 5em;
+    }
+}
+
+/* Modal /  Dialog */
+dialog {
+    border: none;
+    background-color: var(--lighter);
+}
+
+dialog::backdrop {
+    background-color: var(--darker-o);
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 2;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Forms */
+#drop-zone {
+    display: block;
+    width: 100%;
+    height: 125px;
+}
+
+#image-preview {
+    display: block;
+    margin: auto;
+    width: auto;
+    height: 125px;
+}
+
+/* Pins */
+
+.pin_grid {
+    display: grid;
+    grid-template-columns: repeat( auto-fill, minmax(350px, 1fr) );
+}
+
+.pin {
+    & button {
+        cursor: zoom-in;
+        width: 100%;
+    }
+
+    & img {
+        width: inherit;
+    }
+}
+
+/* Misc */
+.hidden {
+    display: none !important;
+}

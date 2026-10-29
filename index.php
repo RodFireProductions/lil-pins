@@ -106,6 +106,9 @@ if (isset($_GET["p"])) {
             $statement->execute();
             $db->close();
             break;
+        case "extension":
+            // TODO: from extension
+            break;
     };
 };
 ?>
@@ -139,7 +142,7 @@ if (isset($_GET["p"])) {
                 include "includes/pin_grid.php";
             ?>
         </main>
-        <footer>End :)</footer>
+        <footer><p>End :)</p></footer>
     </body>
     <script src="src/modal.js" charset="utf-8"></script>
 </html>

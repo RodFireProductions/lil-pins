@@ -1,6 +1,6 @@
 <header>
     <h1><a href="index.php">lil-pins</a></h1>
-    <div class="middle">
+    <nav class="middle">
         <?php
             if (isset($_SESSION["in"])) {
                 ?>
@@ -18,7 +18,7 @@
             echo '<a href="boards.php">Boards</a>';
         }
         ?>
-    </div>
+    </nav>
     <?php
         if (!isset($_SESSION["in"])) { ?>
             <button type="button" name="login" command="show-modal" commandfor="login-dialog">Log In</button>

@@ -2,7 +2,7 @@
 session_start();
 $error = False;
 $error_msg = "";
-// TODO: Add editing 
+// TODO: Add editing
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ $error_msg = "";
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="src/style.css">
         <link rel="shortcut icon" href="favicon.ico">
-        <title>lil-pins</title>
+        <title>Boards | lil-pins</title>
     </head>
     <body>
         <?php include "includes/header.php"; ?>
@@ -33,20 +33,32 @@ $error_msg = "";
                     };
                     $all_boards->finalize();
 
+                    echo "<div class='boards'>";
                     foreach ($board_data as $board) {
-                        $pin_num = count(explode(" ", $board["pins"]));
+                        if ($board["pins"] != "") {
+                            $pin_num = count(explode(" ", $board["pins"]));
+                        } else {
+                            $pin_num = 0;
+                        }
+
+                        if ($board["description"] && strlen($board["description"]) > 30) {
+                            $description = substr($board["description"], 0, 29)."…";
+                        } else {
+                            $description = $board["description"];
+                        };
                         ?>
                         <div class="board">
-                            <hgroup>
-                                <h2>
-                                    <a href="boards.php?p=<?php echo $board["id"] ?>"><?php echo $board["title"]; ?></a>
-                                </h2>
-                                <p>(<?php echo $pin_num; ?>) Pins</p>
-                            </hgroup>
-                            <p><?php echo $board["description"] ?></p>
+                            <h2>
+                                <a href="boards.php?p=<?php echo $board["id"] ?>"><?php echo $board["title"]; ?></a>
+                                (<?php echo $pin_num; ?>)
+                            </h2>
+                            <?php if ($board["description"]) {
+                                echo "<p>".$description."</p>";
+                            }; ?>
                         </div>
                         <?php
                     };
+                    echo "</div>";
 
                 } else {
                     $get = $db->prepare('SELECT * FROM "Boards" WHERE "id" = :1');
@@ -54,27 +66,38 @@ $error_msg = "";
                     $board = $get->execute();
                     $board = $board->fetchArray();
 
-                    $pin_ids = explode(" ", $board["pins"]);
-                    $pin_data = array();
-                    foreach ($pin_ids as $id) {
-                        if (isset($_SESSION["in"])) {
-                            $res = $db->prepare('SELECT * FROM "Pins" WHERE "id" = :1');
-                        } else {
-                            $res = $db->prepare('SELECT * FROM "Pins" WHERE "id" = :1 AND "private" = "0"');
+                    if ($board) {
+                        ?>
+                        <section class="board-info">
+                            <h2><?php echo $board["title"]; ?></h2>
+                            <p><?php echo $board["description"] ?></p>
+                        </section>
+                        <?php
+                        $pin_ids = explode(" ", $board["pins"]);
+                        $pin_data = array();
+                        foreach ($pin_ids as $id) {
+                            if (isset($_SESSION["in"])) {
+                                $res = $db->prepare('SELECT * FROM "Pins" WHERE "id" = :1');
+                            } else {
+                                $res = $db->prepare('SELECT * FROM "Pins" WHERE "id" = :1 AND "private" = "0"');
+                            };
+                            $res->bindValue(":1", $id);
+                            $res = $res->execute();
+                            $res = $res->fetchArray();
+                            if ($res) {
+                                array_push($pin_data, $res);
+                            };
                         };
-                        $res->bindValue(":1", $id);
-                        $res = $res->execute();
-                        $res = $res->fetchArray();
-                        if ($res) {
-                            array_push($pin_data, $res);
-                        };
-                    };
-                    include "includes/pin_grid.php";
-                };
+                        include "includes/pin_grid.php";
 
+                    } else {
+                    echo "<p class='error'>This board is either private or doesn't exist.</p>";
+                    };
+                };
                 $db->close();
             ?>
         </main>
+        <footer><p>End :)</p></footer>
     </body>
     <script src="src/modal.js" charset="utf-8"></script>
 </html>

@@ -1,4 +1,4 @@
-<div class="pin_grid">
+<section class="pin_grid">
 <?php
 
 $all_tags = $db->query('SELECT * FROM "Tags"');
@@ -44,24 +44,8 @@ foreach ($pin_data as $pin) {
             data-caption="<?php echo $pin["caption"]; ?>"
             data-private="<?php echo $pin["private"]; ?>"
         >
-            <img src="<?php echo $pin["image"]; ?>">
+            <img loading="lazy" src="<?php echo $pin["image"]; ?>">
         </button>
-        <?php if ($caption != "") {
-            ?>
-                <figcaption><?php echo $caption; ?></figcaption>
-            <?php
-        } ?>
-        <?php if ($pin["tags"] != "") { ?>
-            <div class="tags">
-                <?php
-                for ($i = 0; $i < count($tags); $i++) {
-                    ?>
-                    <a href="pin.php?p=<?php echo $tags[$i] ?>"><?php echo $tag_names[$i] ?></a>
-                    <?php
-                };
-                ?>
-            </div>
-        <?php }; ?>
     </figure>
 <?php }; ?>
-</div>
+</section>

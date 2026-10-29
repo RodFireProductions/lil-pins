@@ -2,7 +2,7 @@
 session_start();
 $error = False;
 $error_msg = "";
-// TODO: Add editing 
+// TODO: Add editing
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +12,7 @@ $error_msg = "";
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="src/style.css">
         <link rel="shortcut icon" href="favicon.ico">
-        <title>lil-pins</title>
+        <title>Pin | lil-pin </title>
     </head>
     <body>
         <?php include "includes/header.php"; ?>
@@ -44,14 +44,18 @@ $error_msg = "";
                     };
 
                     ?>
-                    <article class="big-pin">
-                        <img src="<?php echo $pin["image"]; ?>" alt="Pin #<?php echo $pin["id"] ?>">
-                        <p class="caption"><?php echo $pin["caption"]; ?></p>
-                        <ul><?php
-                            foreach ($tags as $t) {
-                                echo "<a href='pin.php?p=".$t["id"]."'>".$t["name"]."</a>";
-                            };
-                        ?></ul>
+                    <article class="big-pin two_col">
+                        <div>
+                            <img src="<?php echo $pin["image"]; ?>" alt="Pin #<?php echo $pin["id"] ?>">
+                        </div>
+                        <div class="info">
+                            <p class="caption"><?php echo $pin["caption"]; ?></p>
+                            <ul><?php
+                                foreach ($tags as $t) {
+                                    echo "<li><a href='pin.php?p=".$t["id"]."'>".$t["name"]."</a></li>";
+                                };
+                            ?></ul>
+                        </div>
                     </article>
                     <?php
                 } else {
@@ -64,6 +68,7 @@ $error_msg = "";
 
             ?>
         </main>
+        <footer><p>End :)</p></footer>
     </body>
     <script src="src/modal.js" charset="utf-8"></script>
 </html>

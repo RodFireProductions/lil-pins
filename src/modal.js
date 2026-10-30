@@ -4,7 +4,8 @@ const DIALOG = {
     img: document.getElementById("pin-img"),
     caption: document.getElementById("pin-caption"),
     tags: document.getElementById("pin-tags"),
-    permalink: document.getElementById("pin-permalink")
+    permalink: document.getElementById("pin-permalink"),
+    src: document.getElementById("pin-source")
 };
 const pinBTN = document.getElementsByClassName("pin-btn");
 let current_pin;
@@ -18,7 +19,7 @@ for (const pin of pinBTN) {
             tags: evt.currentTarget.dataset.tags,
             tag_names: evt.currentTarget.dataset.names,
             caption: evt.currentTarget.dataset.caption,
-            private: evt.currentTarget.dataset.private
+            private: evt.currentTarget.dataset.private,
         };
     });
 }
@@ -26,12 +27,16 @@ for (const pin of pinBTN) {
 DIALOG.el.addEventListener("beforetoggle", (evt) => {
     if (evt.newState == "open") {
         let pin = evt.currentTarget;
-        console.log(current_pin);
 
         DIALOG.img.src = current_pin.img;
         DIALOG.img.alt = "pin #" + current_pin.id;
         DIALOG.caption.innerHTML = current_pin.caption;
         DIALOG.permalink.href = "pin.php?p=" + current_pin.id;
+
+        if (current_pin.src != "") {
+            DIALOG.src.href = current_pin.src;
+            DIALOG.src.classList.remove("hidden");
+        };
 
         if (current_pin.tags != "") {
             let tags = current_pin.tags.split(" ");
@@ -53,6 +58,8 @@ DIALOG.el.addEventListener("beforetoggle", (evt) => {
         DIALOG.caption.innerHTML = "";
         DIALOG.permalink.href = "";
         DIALOG.tags.innerHTML = "";
+        DIALOG.src.href = "";
+        DIALOG.src.classList.add("hidden");
     };
 });
 

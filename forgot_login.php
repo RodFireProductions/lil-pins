@@ -10,7 +10,7 @@ if (file_exists("pins.db")) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="src/style.css">
         <link rel="shortcut icon" href="favicon.ico">
-        <title>lil-pins initializing</title>
+        <title>Forgot login | lil-pins</title>
         <style>
             body {
                 padding: 1em 5em;

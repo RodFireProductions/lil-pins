@@ -55,6 +55,11 @@ $error_msg = "";
                                     echo "<li><a href='pin.php?p=".$t["id"]."'>".$t["name"]."</a></li>";
                                 };
                             ?></ul>
+                            <?php
+                            if ($pin["source"] != "") {
+                                echo "<a class='source' href='".$pin["source"]."'>Source</a>";
+                            }
+                            ?>
                         </div>
                     </article>
                     <?php

@@ -4,7 +4,7 @@ This project uses [`HTMLButtonElement command`](https://developer.mozilla.org/en
 and [`CSS nesting`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/Nesting_selector) (2023),
 so you will need an updated browser. (I'm sorry, my retro peers.)
 
-I made this project to replace my instance of [Pinry](https://github.com/pinry/pinry) because, I was changing servers
+I made this project to replace my instance of [Pinry](https://github.com/pinry/pinry), because I was changing servers
 and needed something that could use SQLite and be run easily without Docker.
 
 ## How To Use

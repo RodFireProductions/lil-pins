@@ -121,7 +121,8 @@ dialog#main-pin-dialog {
         grid-template-columns: 1fr 30%;
         grid-template-rows: auto auto;
         grid-template-areas: "caption tags"
-                             "caption perma";
+                             "caption perma"
+                             "caption src";
         grid-gap: 10px;
     }
 
@@ -131,6 +132,10 @@ dialog#main-pin-dialog {
 
     & #pin-permalink {
         grid-area: perma;
+    }
+
+    & #pin-source {
+        grid-area: src;
     }
 
     & ul {
@@ -383,7 +388,7 @@ figure.pin {
 
     & ul {
         list-style: "";
-        margin: 0px;
+        margin: 0px 0px 10px;
         padding: 0px;
         display: flex;
         gap: 5px;
@@ -395,6 +400,13 @@ figure.pin {
         color: var(--lighter);
         padding: 5px 8px;
         border-radius: 50px;
+    }
+
+    & a {
+        color: var(--darker);
+        &:hover {
+            color: var(--dark);
+        }
     }
 }
 

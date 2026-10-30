@@ -128,6 +128,7 @@
     <div class="pin-info">
         <div id="pin-caption"></div>
         <ul id="pin-tags"></ul>
+        <a id="pin-source" href="#" class="hidden" target="_blank">Source</a>
         <a id="pin-permalink" href="#">Permalink</a>
     </div>
 </dialog>

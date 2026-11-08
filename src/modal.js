@@ -26,7 +26,6 @@ for (const pin of pinBTN) {
 
 DIALOG.el.addEventListener("beforetoggle", (evt) => {
     if (evt.newState == "open") {
-        let pin = evt.currentTarget;
 
         DIALOG.img.src = current_pin.img;
         DIALOG.img.alt = "pin #" + current_pin.id;

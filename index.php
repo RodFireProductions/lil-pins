@@ -36,77 +36,87 @@ if (isset($_GET["p"])) {
             };
             break;
         case "pin":
-            include "includes/utils.php";
-            $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
+            if (isset($_SESSION["in"])) {
+                include "includes/utils.php";
+                $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
 
-            if (isset($_POST["private"])) {
-                $private = 1;
+                if (isset($_POST["private"])) {
+                    $private = 1;
+                } else {
+                    $private = 0;
+                };
+
+                if (isset($_POST["source"])) {
+                    $src = trim($_POST["source"]);
+                } else {
+                    $src = "";
+                };
+
+                if (isset($_POST["caption"])) {
+                    $caption = trim($_POST["caption"]);
+                } else {
+                    $caption = "";
+                };
+
+                if (isset($_POST["tags"])) {
+                    $tags = handleTags($_POST["tags"]);
+                } else {
+                    $tags = "";
+                };
+
+                $image_url = uploadImage($_POST["url"]);
+
+                $statement = $db->prepare('INSERT INTO "Pins" ("image", "source", "caption", "private", "tags")
+                VALUES (:1, :2, :3, :4, :5)');
+                $statement->bindValue(':1', $image_url);
+                $statement->bindValue(':2', $src);
+                $statement->bindValue(':3', $caption);
+                $statement->bindValue(':4', $private);
+                $statement->bindValue(':5', $tags);
+                $statement->execute();
+
+                if (isset($_POST["boards"])) {
+                    $id = $db->query('SELECT "id" FROM "Pins" ORDER BY "id" DESC LIMIT 1');
+                    $id = $id->fetchArray()[0];
+                    handleBoards($_POST["boards"], $id);
+                };
+                $db->close();
             } else {
-                $private = 0;
-            }
-
-            if (isset($_POST["source"])) {
-                $src = trim($_POST["source"]);
-            } else {
-                $src = "";
-            }
-
-            if (isset($_POST["caption"])) {
-                $caption = trim($_POST["caption"]);
-            } else {
-                $caption = "";
-            }
-
-            if (isset($_POST["tags"])) {
-                $tags = handleTags($_POST["tags"]);
-            } else {
-                $tags = "";
-            }
-
-            $image_url = uploadImage($_POST["url"]);
-
-            $statement = $db->prepare('INSERT INTO "Pins" ("image", "source", "caption", "private", "tags")
-            VALUES (:1, :2, :3, :4, :5)');
-            $statement->bindValue(':1', $image_url);
-            $statement->bindValue(':2', $src);
-            $statement->bindValue(':3', $caption);
-            $statement->bindValue(':4', $private);
-            $statement->bindValue(':5', $tags);
-            $statement->execute();
-
-            if (isset($_POST["boards"])) {
-                $id = $db->query('SELECT "id" FROM "Pins" ORDER BY "id" DESC LIMIT 1');
-                $id = $id->fetchArray()[0];
-                handleBoards($_POST["boards"], $id);
-            }
-            $db->close();
+                $error = True;
+                $error_msg = "You have to be logged in to do that.";
+            };
             break;
         case "board":
-            include "includes/utils.php";
-            $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
+            if (isset($_SESSION["in"])) {
+                $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
 
-            if (isset($_POST["private"])) {
-                $private = 1;
+                if (isset($_POST["private"])) {
+                    $private = 1;
+                } else {
+                    $private = 0;
+                };
+
+                if (isset($_POST["description"])) {
+                    $desc = trim($_POST["description"]);
+                } else {
+                    $desc = "";
+                };
+
+                $statement = $db->prepare('INSERT INTO "Boards" ("title", "description", "private", "pins")
+                VALUES (:1, :2, :3, :4)');
+                $statement->bindValue(':1', trim($_POST["title"]));
+                $statement->bindValue(':2', $desc);
+                $statement->bindValue(':3', $private);
+                $statement->bindValue(':4', "");
+                $statement->execute();
+                $db->close();
             } else {
-                $private = 0;
-            }
-
-            if (isset($_POST["description"])) {
-                $desc = trim($_POST["description"]);
-            } else {
-                $desc = "";
-            }
-
-            $statement = $db->prepare('INSERT INTO "Boards" ("title", "description", "private", "pins")
-            VALUES (:1, :2, :3, :4)');
-            $statement->bindValue(':1', trim($_POST["title"]));
-            $statement->bindValue(':2', $desc);
-            $statement->bindValue(':3', $private);
-            $statement->bindValue(':4', "");
-            $statement->execute();
-            $db->close();
+                $error = True;
+                $error_msg = "You have to be logged in to do that.";
+            };
             break;
         case "extension":
+            if (isset($_SESSION["in"])) {};
             // TODO: from extension
             break;
     };

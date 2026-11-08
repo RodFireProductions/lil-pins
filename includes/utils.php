@@ -77,8 +77,11 @@ function addToBoard($id, $pin) {
     if ($pins == "") {
         $pins = $pin;
     } else {
-        $pins = $pins." ".$pin;
-    }
+        $e_pins = explode(" ", $pins);
+        if (!in_array($pin, $e_pins)) {
+            $pins = $pins." ".$pin;
+        };
+    };
 
     $statement = $db->prepare('UPDATE "Boards" SET "pins" = :1 WHERE "id" = :2');
     $statement->bindValue(":1", $pins);
@@ -88,8 +91,32 @@ function addToBoard($id, $pin) {
     $db->close();
 };
 
-function handleBoards($boards, $pin) {
+function removeFromBoard($id, $pin) {
+    $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
 
+    $pins = $db->prepare('SELECT "pins" FROM "Boards" WHERE "id" = :1');
+    $pins->bindValue(":1", $id);
+    $pins = $pins->execute();
+    $pins = $pins->fetchArray()[0];
+
+    if ($pins != "") {
+        for ($i = 0; $i < count($e_pins); $i++) {
+            echo $e_pins[$i]."<br>";
+            if ($pin == $e_pins[$i]) {
+                unset($e_pins[$i]);
+            };
+        };
+    };
+
+    $pins = implode(" ", $e_pins);
+
+    $statement = $db->prepare('UPDATE "Boards" SET "pins" =:1 WHERE "id" = :2');
+    $statement->bindValue(":1", $pins);
+    $statement->bindValue(":2", $id);
+    $statement->execute();
+}
+
+function handleBoards($boards, $pin) {
     foreach ($boards as $b) {
         if (str_contains($b, "#")) {
             $id = createBoard(explode("#", $b)[1]);

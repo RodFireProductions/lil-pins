@@ -2,7 +2,38 @@
 session_start();
 $error = False;
 $error_msg = "";
-// TODO: Add editing
+
+if (isset($_GET["p"]) && $_GET["p"] != "" && isset($_GET["from"]) && isset($_SESSION["in"])) {
+    $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
+    if ($_GET["from"] == "edit") {
+        if (isset($_POST["private"])) {
+            $private = 1;
+        } else {
+            $private = 0;
+        };
+
+        if (isset($_POST["description"])) {
+            $desc = trim($_POST["description"]);
+        } else {
+            $desc = "";
+        };
+
+        $statement = $db->prepare('UPDATE "Boards" SET "title" = :1, "description" = :2, "private" = :3 WHERE "id" = :4');
+        $statement->bindValue(':1', trim($_POST["title"]));
+        $statement->bindValue(':2', $desc);
+        $statement->bindValue(':3', $private);
+        $statement->bindValue(':4', $_GET["p"]);
+        $statement->execute();
+        $db->close();
+
+    } else if ($_GET["from"] == "delete") {
+        $statement = $db->prepare('DELETE FROM "Boards" WHERE "id" = :1');
+        $statement->bindValue(":1", $_GET["p"]);
+        $statement->execute();
+    };
+    $db->close();
+};
+
 ?>
 
 <!DOCTYPE html>
@@ -69,8 +100,42 @@ $error_msg = "";
                     if ($board) {
                         ?>
                         <section class="board-info">
-                            <h2><?php echo $board["title"]; ?></h2>
-                            <p><?php echo $board["description"] ?></p>
+                            <div id="info">
+                                <h2><?php echo $board["title"]; ?></h2>
+                                <p><?php echo $board["description"] ?></p>
+                            </div>
+                            <div class="hidden" id="edit-form">
+                                <form class="" action="?p=<?php echo $_GET["p"]; ?>&from=edit" method="post">
+                                    <legend>Edit Board</legend>
+                                    <p>
+                                        <label for="title">Title</label>:
+                                        <input type="text" name="title" id="title" value="<?php echo $board["title"]; ?>" required>
+                                    </p><p>
+                                        <label for="description">Description</label>:<br>
+                                        <textarea name="description" id="description" rows="8" cols="50"><?php $board["description"]; ?></textarea>
+                                    </p><p>
+                                        <label>
+                                            Make private?
+                                            <input type="checkbox" name="private" id="private" value="yes"
+                                            <?php if ($board["private"] == 1) {
+                                                echo "checked";
+                                            }; ?>
+                                            >
+                                            <span></span>
+                                        </label>
+                                    </p><p>
+                                        <input type="submit" id="submit" value="Submit">
+                                    </p>
+                                </form>
+                            </div>
+                            <?php
+                            if (isset($_SESSION["in"])) {
+                                echo "<div class='edit'>";
+                                echo "<a href='?p=".$_GET["p"]."&from=delete' class='button'>Delete</a>";
+                                echo "<button type='button' id='edit' name='edit' data-which='board'>Edit</button>";
+                                echo "</div>";
+                            };
+                            ?>
                         </section>
                         <?php
                         $pin_ids = explode(" ", $board["pins"]);
@@ -100,4 +165,9 @@ $error_msg = "";
         <footer><p>End :)</p></footer>
     </body>
     <script src="src/modal.js" charset="utf-8"></script>
+    <?php
+        if (isset($_SESSION["in"])) {
+            echo "<script src='src/edit.js' charset='utf-8'></script>";
+        };
+    ?>
 </html>

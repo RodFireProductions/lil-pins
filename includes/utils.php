@@ -12,7 +12,7 @@ function uploadImage($url) {
     };
 
     if (!file_exists("media/")) {
-        mkdir("media/", 0664, true);
+        mkdir("media/", 0775, true);
     };
 
     $hex = bin2hex(random_bytes(10));
@@ -24,7 +24,7 @@ function uploadImage($url) {
 };
 
 function createTag($tag) {
-    $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
+    $db = new SQLite3($config->database, SQLITE3_OPEN_READWRITE);
     $statement = $db->prepare('INSERT INTO "Tags" ("name") VALUES (:1)');
     $statement->bindValue(":1", $tag);
     $statement->execute();
@@ -54,7 +54,7 @@ function handleTags($tags) {
 };
 
 function createBoard($board) {
-    $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
+    $db = new SQLite3($config->database, SQLITE3_OPEN_READWRITE);
     $statement = $db->prepare('INSERT INTO "Boards" ("title", "private") VALUES (:1, "0")');
     $statement->bindValue(":1", $board);
     $statement->execute();
@@ -67,7 +67,7 @@ function createBoard($board) {
 };
 
 function addToBoard($id, $pin) {
-    $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
+    $db = new SQLite3($config->database, SQLITE3_OPEN_READWRITE);
 
     $pins = $db->prepare('SELECT "pins" FROM "Boards" WHERE "id" = :1');
     $pins->bindValue(":1", $id);
@@ -92,7 +92,7 @@ function addToBoard($id, $pin) {
 };
 
 function removeFromBoard($id, $pin) {
-    $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
+    $db = new SQLite3($config->database, SQLITE3_OPEN_READWRITE);
 
     $pins = $db->prepare('SELECT "pins" FROM "Boards" WHERE "id" = :1');
     $pins->bindValue(":1", $id);

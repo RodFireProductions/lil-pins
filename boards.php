@@ -2,9 +2,10 @@
 session_start();
 $error = False;
 $error_msg = "";
+$config = include('includes/config.php');
 
 if (isset($_GET["p"]) && $_GET["p"] != "" && isset($_GET["from"]) && isset($_SESSION["in"])) {
-    $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
+    $db = new SQLite3($config->database, SQLITE3_OPEN_READWRITE);
     if ($_GET["from"] == "edit") {
         if (isset($_POST["private"])) {
             $private = 1;
@@ -50,7 +51,7 @@ if (isset($_GET["p"]) && $_GET["p"] != "" && isset($_GET["from"]) && isset($_SES
         <?php include "includes/modal.php"; ?>
         <main>
             <?php
-                $db = new SQLite3('pins.db', SQLITE3_OPEN_READONLY);
+                $db = new SQLite3($config->database, SQLITE3_OPEN_READONLY);
 
                 if (!isset($_GET["p"]) || $_GET["p"] == "") {
                     if (isset($_SESSION["in"])) {

@@ -9,8 +9,8 @@ and needed something that could use SQLite and be run easily without Docker.
 
 ## How To Use
 
-- Initialize database via `init.php` and then immediately delete said file.
-- Make sure your database isn't publicly readable.
+- Initialize database via `init.php` and then remove said file.
+- Make sure your database isn't publicly readable and set its location `includes/config.php`.
 
 **Don't** upload `forgot_login.php` to your public webserver.
 Only use this file if you forget your credentials.
@@ -18,19 +18,7 @@ Preferably you'd use this file with your database on a local server.
 If you do need to upload it to your public server, **delete** it immediately after use.
 
 ### "I don't like the colors."
-:( You can change them in `src/style.css`.
-The following are all the colors used from darkest to lightest.
-
-```css
-:root {
-    --darker    : #2E2530;
-    --darker-o  : #2E253066; /* Dialogue overlay backdrop */
-    --dark      : #5A4A5C;
-    --medium    : #8C7B8E;
-    --light     : #C2B8C4;
-    --lighter   : #EFECEF;
-}
-```
+:( You can change them in `src/style.css`. See `:root` for the color variables used.
 
 ## Licenses
 

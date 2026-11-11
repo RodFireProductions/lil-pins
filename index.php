@@ -3,11 +3,12 @@ session_start();
 $error = False;
 $error_msg = "";
 $from_ext = False;
+$config = include('includes/config.php');
 
 if (isset($_GET["p"])) {
     switch ($_GET["p"]) {
         case "login":
-            $db = new SQLite3('pins.db', SQLITE3_OPEN_READONLY);
+            $db = new SQLite3($config->database, SQLITE3_OPEN_READONLY);
             $statement = $db->prepare('SELECT * FROM "User" WHERE "username" = :1 ');
             $statement->bindValue(':1', $_POST["username"]);
             $user = $statement->execute();
@@ -39,7 +40,7 @@ if (isset($_GET["p"])) {
         case "pin":
             if (isset($_SESSION["in"])) {
                 include "includes/utils.php";
-                $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
+                $db = new SQLite3($config->database, SQLITE3_OPEN_READWRITE);
 
                 if (isset($_POST["private"])) {
                     $private = 1;
@@ -89,7 +90,7 @@ if (isset($_GET["p"])) {
             break;
         case "board":
             if (isset($_SESSION["in"])) {
-                $db = new SQLite3('pins.db', SQLITE3_OPEN_READWRITE);
+                $db = new SQLite3($config->database, SQLITE3_OPEN_READWRITE);
 
                 if (isset($_POST["private"])) {
                     $private = 1;
@@ -141,7 +142,7 @@ if (isset($_GET["p"])) {
         <?php include "includes/modal.php"; ?>
         <main>
             <?php
-                $db = new SQLite3('pins.db', SQLITE3_OPEN_READONLY);
+                $db = new SQLite3($config->database, SQLITE3_OPEN_READONLY);
                 $all_pins = $db->query('SELECT * FROM "Pins"');
                 if (isset($_SESSION["in"])) {
                     $all_pins = $db->query('SELECT * FROM "Pins"');

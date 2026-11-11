@@ -45,8 +45,8 @@ if (file_exists("pins.db")) {
  </html>
 
 <?php } else if (isset($_GET["p"]) && $_GET["p"] == "reset") {
-
-    $db = new SQLite3('pins.db', SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
+    $config = include('includes/config.php');
+    $db = new SQLite3($config->database, SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
 
     // Encrpyting Password
     $magicpassword = $_POST['password'] . $_POST["magic_word"];

@@ -2,6 +2,7 @@
 session_start();
 $error = False;
 $error_msg = "";
+$config = include('includes/config.php');
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +20,7 @@ $error_msg = "";
         <main>
             <?php
 
-            $db = new SQLite3('pins.db', SQLITE3_OPEN_READONLY);
+            $db = new SQLite3($config->database, SQLITE3_OPEN_READONLY);
             $all_tags = $db->query('SELECT * FROM "Tags"');
             $tag_data = array();
             while ($res = $all_tags->fetchArray()) {

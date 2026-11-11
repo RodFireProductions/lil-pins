@@ -33,10 +33,23 @@
                     <div>
                         <p>
                             <label for="url">Image URL</label>:
-                            <input type="url" name="url" id="url" required>
+                            <input type="url" name="url" id="url" <?php
+                                if (isset($from_ext) && $from_ext) {
+                                    if (str_contains($_POST["image"], "http")) {
+                                        $img = $_POST["image"];
+                                    } else {
+                                        $img = $_POST["source"]."/".$_POST["image"];
+                                    };
+                                    echo 'value="'.$img.'"';
+                                };
+                            ?> required>
                         </p><p>
                             <label for="url">Image Source</label>:
-                            <input type="url" name="source" id="source">
+                            <input type="url" name="source" id="source" <?php
+                                if (isset($from_ext) && $from_ext) {
+                                    echo "value='".$_POST["source"]."'";
+                                };
+                            ?>>
                         </p><p>
                             <label for="caption">Caption</label>:<br>
                             <textarea name="caption" id="caption" rows="8" cols="50"></textarea>

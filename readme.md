@@ -1,4 +1,4 @@
-# lil-pins
+# ![](favicon.ico) lil-pins
 
 This project uses [`HTMLButtonElement command`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement/command) (2025)
 and [`CSS nesting`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/Nesting_selector) (2023),
@@ -8,6 +8,9 @@ I made this project to replace my instance of [Pinry](https://github.com/pinry/p
 and needed something that could use SQLite and be run easily without Docker.
 
 ## How To Use
+
+- Initialize database via `init.php` and then immediately delete said file.
+- Make sure your database isn't publicly readable.
 
 **Don't** upload `forgot_login.php` to your public webserver.
 Only use this file if you forget your credentials.

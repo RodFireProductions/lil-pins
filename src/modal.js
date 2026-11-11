@@ -197,3 +197,5 @@ function createBoard(title) {
     option.innerHTML = title;
     boards.appendChild(option);
 };
+
+/* Extension */

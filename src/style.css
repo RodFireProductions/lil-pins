@@ -213,9 +213,9 @@ dialog#main-pin-dialog {
 
 #image-preview {
     display: block;
-    margin: auto;
-    width: auto;
-    height: 200px;
+    margin: 5px auto;
+    width: calc(100% - 1em);
+    height: auto;
 }
 
 legend {

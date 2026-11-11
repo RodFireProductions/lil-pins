@@ -166,7 +166,7 @@ if (isset($_GET["p"]) && $_GET["p"] != "" && isset($_GET["from"]) && isset($_SES
     </body>
     <script src="src/modal.js" charset="utf-8"></script>
     <?php
-        if (isset($_SESSION["in"])) {
+        if (isset($_GET["p"]) && $_GET["p"] != "" && isset($_SESSION["in"])) {
             echo "<script src='src/edit.js' charset='utf-8'></script>";
         };
     ?>

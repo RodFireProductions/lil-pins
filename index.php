@@ -2,6 +2,7 @@
 session_start();
 $error = False;
 $error_msg = "";
+$from_ext = False;
 
 if (isset($_GET["p"])) {
     switch ($_GET["p"]) {
@@ -116,8 +117,11 @@ if (isset($_GET["p"])) {
             };
             break;
         case "extension":
-            if (isset($_SESSION["in"])) {};
-            // TODO: from extension
+            if (isset($_SESSION["in"])) {
+                if (isset($_POST["image"]) && isset($_POST["source"])) {
+                    $from_ext = True;
+                };
+            };
             break;
     };
 };
@@ -155,4 +159,12 @@ if (isset($_GET["p"])) {
         <footer><p>End :)</p></footer>
     </body>
     <script src="src/modal.js" charset="utf-8"></script>
+    <?php if (isset($from_ext) && $from_ext) {
+        ?>
+        <script type="text/javascript">
+            document.getElementById("pin-dialog").showModal();
+            displayImage(null, imgURL.value);
+        </script>
+        <?php
+    } ?>
 </html>

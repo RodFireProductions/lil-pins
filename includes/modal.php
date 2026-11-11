@@ -75,7 +75,7 @@
                             <br>
                             <select name="tags[]" id="tags" multiple>
                                 <?php
-                                $db = new SQLite3('pins.db', SQLITE3_OPEN_READONLY);
+                                $db = new SQLite3($config->database, SQLITE3_OPEN_READONLY);
                                 $result = $db->query('SELECT * FROM "Tags"');
                                 while ($tag = $result->fetchArray()) {
                                     echo "<option value='" . $tag["id"] . "'>" . $tag["name"] . "</option>";

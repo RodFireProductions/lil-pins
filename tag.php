@@ -89,4 +89,9 @@ $config = include('includes/config.php');
         <footer><p>End :)</p></footer>
     </body>
     <script src="src/modal.js" charset="utf-8"></script>
+    <?php
+        if (isset($_SESSION["in"])) {
+            echo "<script src='src/form.js' charset='utf-8'></script>";
+        };
+    ?>
 </html>

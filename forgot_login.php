@@ -1,6 +1,6 @@
 <?php
-
-if (file_exists("pins.db")) {
+$config = include('includes/config.php');
+if (file_exists($config->database) && !isset($_GET["p"])) {
 
 ?>
 <!DOCTYPE html>
@@ -45,7 +45,6 @@ if (file_exists("pins.db")) {
  </html>
 
 <?php } else if (isset($_GET["p"]) && $_GET["p"] == "reset") {
-    $config = include('includes/config.php');
     $db = new SQLite3($config->database, SQLITE3_OPEN_CREATE | SQLITE3_OPEN_READWRITE);
 
     // Encrpyting Password
@@ -53,10 +52,10 @@ if (file_exists("pins.db")) {
     $password = trim(password_hash($magicpassword, PASSWORD_DEFAULT));
 
     // Updating Login
-    $statement = $db->prepare('UPDATE "User" SET "username" = :1, "password" = :2, "magic_word" = :3, WHERE "id" = 1');
+    $statement = $db->prepare('UPDATE "User" SET "username" = :1, "password" = :2, "magic_word" = :3 WHERE "id" = 1');
     $statement->bindValue(':1', $_POST["username"]);
     $statement->bindValue(':2', $password);
-    $statement->bindValue(':3', $magic_word);
+    $statement->bindValue(':3', $_POST["magic_word"]);
     $statement->execute();
 
     $db->close();

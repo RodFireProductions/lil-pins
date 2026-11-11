@@ -14,11 +14,10 @@ if (isset($_GET["p"])) {
             $user = $statement->execute();
             $user = $user->fetchArray();
 
-            if (count($user) > 0) {
+            if ($user) {
                 $password = trim($_POST["password"]) . $user["magic_word"];
 
                 if (password_verify($password, $user["password"])) {
-                    header("Location: index.php");
                     $_SESSION["in"] = TRUE;
                 } else {
                     $error = True;
@@ -32,7 +31,6 @@ if (isset($_GET["p"])) {
             break;
         case "logout":
             if (isset($_SESSION["in"])) {
-                header("Location: index.php");
                 $_SESSION["in"] = FALSE;
                 session_destroy();
             };
@@ -160,12 +158,17 @@ if (isset($_GET["p"])) {
         <footer><p>End :)</p></footer>
     </body>
     <script src="src/modal.js" charset="utf-8"></script>
-    <?php if (isset($from_ext) && $from_ext) {
-        ?>
-        <script type="text/javascript">
-            document.getElementById("pin-dialog").showModal();
-            displayImage(null, imgURL.value);
-        </script>
+    <?php
+        if (isset($_SESSION["in"])) {
+            echo "<script src='src/form.js' charset='utf-8'></script>";
+        };
+
+        if (isset($from_ext) && $from_ext) {
+            ?>
+            <script type="text/javascript">
+                document.getElementById("pin-dialog").showModal();
+                displayImage(null, imgURL.value);
+            </script>
         <?php
     } ?>
 </html>

@@ -10,11 +10,11 @@ and needed something that could use SQLite and be run easily without Docker.
 ## How To Use
 
 - Initialize database via `init.php` and then remove said file.
-- Make sure your database isn't publicly readable and set its location `includes/config.php`.
+- Make sure your database isn't publicly readable and set its location in `includes/config.php`.
 
 **Don't** upload `forgot_login.php` to your public webserver.
 Only use this file if you forget your credentials.
-Preferably you'd use this file with your database on a local server.
+Preferably you'd use this file with your database on locally.
 If you do need to upload it to your public server, **delete** it immediately after use.
 
 ### "I don't like the colors."

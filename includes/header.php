@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <a href="boards.php">Boards</a>
-                <a href="#">Get Extension</a>
+                <a target="_blank" href="https://github.com/RodFireProductions/lil-pins-extension">Get Extension</a>
         <?php
         } else {
             echo '<a href="boards.php">Boards</a>';

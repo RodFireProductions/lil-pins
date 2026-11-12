@@ -24,6 +24,7 @@ function uploadImage($url) {
 };
 
 function createTag($tag) {
+    global $config;
     $db = new SQLite3($config->database, SQLITE3_OPEN_READWRITE);
     $statement = $db->prepare('INSERT INTO "Tags" ("name") VALUES (:1)');
     $statement->bindValue(":1", $tag);
@@ -54,6 +55,7 @@ function handleTags($tags) {
 };
 
 function createBoard($board) {
+    global $config;
     $db = new SQLite3($config->database, SQLITE3_OPEN_READWRITE);
     $statement = $db->prepare('INSERT INTO "Boards" ("title", "private") VALUES (:1, "0")');
     $statement->bindValue(":1", $board);
@@ -67,6 +69,7 @@ function createBoard($board) {
 };
 
 function addToBoard($id, $pin) {
+    global $config;
     $db = new SQLite3($config->database, SQLITE3_OPEN_READWRITE);
 
     $pins = $db->prepare('SELECT "pins" FROM "Boards" WHERE "id" = :1');
@@ -92,6 +95,7 @@ function addToBoard($id, $pin) {
 };
 
 function removeFromBoard($id, $pin) {
+    global $config;
     $db = new SQLite3($config->database, SQLITE3_OPEN_READWRITE);
 
     $pins = $db->prepare('SELECT "pins" FROM "Boards" WHERE "id" = :1');

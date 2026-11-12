@@ -44,7 +44,7 @@ DIALOG.el.addEventListener("beforetoggle", (evt) => {
             for (let i = 0; i < tags.length; i++) {
                 let li = document.createElement("li");
                 let a = document.createElement("a");
-                a.href = "pin.php?p=" + tags[i];
+                a.href = "tag.php?p=" + tags[i];
                 a.innerHTML = tag_names[i];
                 li.appendChild(a);
                 DIALOG.tags.appendChild(li);

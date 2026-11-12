@@ -125,7 +125,7 @@ if (isset($_GET["p"]) && $_GET["p"] != "" && isset($_GET["from"]) && isset($_SES
                                 <p class="caption"><?php echo $pin["caption"]; ?></p>
                                 <ul><?php
                                     foreach ($tags as $t) {
-                                        echo "<li><a href='pin.php?p=".$t["id"]."'>".$t["name"]."</a></li>";
+                                        echo "<li><a href='tag.php?p=".$t["id"]."'>".$t["name"]."</a></li>";
                                     };
                                 ?></ul>
                                 <?php

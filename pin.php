@@ -158,13 +158,13 @@ if (isset($_GET["p"]) && $_GET["p"] != "" && isset($_GET["from"]) && isset($_SES
                                         <p>
                                             <label for="add-tag">Add new tag:</label>
                                             <br>
-                                            <input type="text" name="add-tag" id="add-tag" value="">
-                                            <button type="button" id="add-tag-btn">Add</button>
+                                            <input type="text" name="add-tag" id="add-tag2" value="">
+                                            <button type="button" id="add-tag-btn2">Add</button>
                                         </p>
                                         <div class="">
                                             <label for="tags">Tags (ctrl+click to select multiple)</label>
                                             <br>
-                                            <select name="tags[]" id="tags" multiple>
+                                            <select name="tags[]" id="tags2" multiple>
                                                 <?php
                                                 $result = $db->query('SELECT * FROM "Tags"');
                                                 while ($tag = $result->fetchArray()) {
@@ -182,13 +182,13 @@ if (isset($_GET["p"]) && $_GET["p"] != "" && isset($_GET["from"]) && isset($_SES
                                         <p>
                                             <label for="add-board">Add new board:</label>
                                             <br>
-                                            <input type="text" name="add-board" id="add-board" value="">
-                                            <button type="button" id="add-board-btn">Add</button>
+                                            <input type="text" name="add-board" id="add-board2" value="">
+                                            <button type="button" id="add-board-btn2">Add</button>
                                         </p>
                                         <div class="">
                                             <label for="boards">Boards (ctrl+click to select multiple)</label>
                                             <br>
-                                            <select name="boards[]" id="boards" multiple>
+                                            <select name="boards[]" id="boards2" multiple>
                                                 <?php
                                                 $result = $db->query('SELECT * FROM "Boards"');
                                                 $current_b = array();

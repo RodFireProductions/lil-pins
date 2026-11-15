@@ -1,5 +1,11 @@
 # ![](favicon.ico) lil-pins
 
+A small single user image pinboard (think Pinterest). There's a [browser extension](https://github.com/RodFireProductions/lil-pins-extension) for it.
+
+You can see a live demo [here](https://php.shroom.ink/demo/lil-pins/).
+
+---
+
 This project uses [`HTMLButtonElement command`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement/command) (2025)
 and [`CSS nesting`](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/Nesting_selector) (2023),
 so you will need an updated browser. (I'm sorry, my retro peers.)
